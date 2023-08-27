@@ -4,13 +4,11 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorPortalFacil(Mapeador):
     name = "mapeadorportalfacil"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 25}
-
     def column(self):
-        return "PFACIL_URL"
+        return "PORTALFACIL"
 
     def backup_column(self):
-        return "VALID_PFACIL"
+        return "VALID_PORTALFACIL"
 
     def urls_pattern(self, protocol, city, state_code):
         # casos conhecidos
@@ -21,5 +19,6 @@ class MapeadorPortalFacil(Mapeador):
 
     def validation(self, response):
         if "portalfacil.com.br" in response.text:
-            return True
+            if "pagina-nao-encontrada" not in response.url:
+                return True
         return False
