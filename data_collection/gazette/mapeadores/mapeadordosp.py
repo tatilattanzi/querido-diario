@@ -4,12 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorDosp(Mapeador):
     name = "mapeadordosp"
 
-    custom_settings = {
-        "CONCURRENT_REQUESTS": 100,
-    }
-
     def column(self):
-        return "DOSP_URL"
+        return "DOSP"
 
     def backup_column(self):
         return "VALID_DOSP"
