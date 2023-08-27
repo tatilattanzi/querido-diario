@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorDalins(Mapeador):
     name = "mapeadordalins"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 100}
-
     def column(self):
-        return "DALINS_URL"
+        return "DALINS"
 
     def backup_column(self):
         return "VALID_DALINS"
