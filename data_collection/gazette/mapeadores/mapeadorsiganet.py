@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorSiganet(Mapeador):
     name = "mapeadorsiganet"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 50}
-
     def column(self):
-        return "SIGANET_URL"
+        return "SIGANET"
 
     def backup_column(self):
         return "VALID_SIGANET"
@@ -25,5 +23,6 @@ class MapeadorSiganet(Mapeador):
 
     def validation(self, response):
         if "siganet" in response.text:
-            return True
+            if ".org" not in response.url:
+                return True
         return False
