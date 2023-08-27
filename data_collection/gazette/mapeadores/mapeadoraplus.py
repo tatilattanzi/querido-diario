@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorAplus(Mapeador):
     name = "mapeadoraplus"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 25}
-
     def column(self):
-        return "APLUS_URL"
+        return "APLUS"
 
     def backup_column(self):
         return "VALID_APLUS"
