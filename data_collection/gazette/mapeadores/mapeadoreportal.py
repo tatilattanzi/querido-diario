@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorEPortal(Mapeador):
     name = "mapeadoreportal"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 50}
-
     def column(self):
-        return "EPORTAL_URL"
+        return "EPORTAL"
 
     def backup_column(self):
         return "VALID_EPORTAL"
