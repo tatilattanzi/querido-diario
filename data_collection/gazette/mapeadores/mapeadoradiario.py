@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorAdiario(Mapeador):
     name = "mapeadoradiario"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 25}
-
     def column(self):
-        return "ADIARIO_URL"
+        return "ADIARIO"
 
     def backup_column(self):
         return "VALID_ADIARIO"
