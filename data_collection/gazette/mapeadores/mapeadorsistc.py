@@ -1,16 +1,14 @@
 from gazette.mapeadores.base.mapeador import Mapeador
 
 
-class MapeadorSemnome(Mapeador):
-    name = "mapeadorsemnome"
-
-    custom_settings = {"CONCURRENT_REQUESTS": 25}
+class MapeadorSistC(Mapeador):
+    name = "mapeadorsistc"
 
     def column(self):
-        return "SEMNOME_URL"
+        return "SISTC"
 
     def backup_column(self):
-        return "VALID_SEMNOME"
+        return "VALID_SISTC"
 
     def urls_pattern(self, protocol, city, state_code):
         # casos conhecidos
@@ -22,6 +20,6 @@ class MapeadorSemnome(Mapeador):
         ]
 
     def validation(self, response):
-        if "Histórico Resumido:" in response.text and "Anexo" in response.text:
+        if "scMenuTHeaderFont" in response.text:
             return True
         return False
