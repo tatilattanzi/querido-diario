@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorImprensaOficial(Mapeador):
     name = "mapeadorimprensaoficial"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 50}
-
     def column(self):
-        return "IMPOFICIAL_URL"
+        return "IMPOFICIAL"
 
     def backup_column(self):
         return "VALID_IMPOFICIAL"
