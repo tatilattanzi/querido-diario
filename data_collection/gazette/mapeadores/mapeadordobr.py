@@ -4,12 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorDOBR(Mapeador):
     name = "mapeadordobr"
 
-    custom_settings = {
-        "CONCURRENT_REQUESTS": 50,
-    }
-
     def column(self):
-        return "DOBR_URL"
+        return "DOBR"
 
     def backup_column(self):
         return "VALID_DOBR"
