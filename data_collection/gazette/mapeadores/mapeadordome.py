@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorDome(Mapeador):
     name = "mapeadordome"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 25}
-
     def column(self):
-        return "DOME_URL"
+        return "DOME"
 
     def backup_column(self):
         return "VALID_DOME"
@@ -16,8 +14,7 @@ class MapeadorDome(Mapeador):
         # casos conhecidos
         # http://diariooficial.conceicaodotocantins.to.gov.br/
         # http://diariooficial.brasilandiadotocantins.to.gov.br/
-
-        # http://diariooficial.saovalerio.to.gov.br/inicio TODO: n sendo pego pela coleta
+        # http://diariooficial.saovalerio.to.gov.br/inicio
 
         return [f"{protocol}://diariooficial.{city}.{state_code}.gov.br/"]
 
