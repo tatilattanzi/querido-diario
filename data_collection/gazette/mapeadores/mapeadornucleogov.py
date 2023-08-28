@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorNucleogov(Mapeador):
     name = "mapeadornucleogov"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 75}
-
     def column(self):
-        return "NUCGOV_URL"
+        return "NUCGOV"
 
     def backup_column(self):
         return "VALID_NUCGOV"
