@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorIweb(Mapeador):
     name = "mapeadoriweb"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 25}
-
     def column(self):
-        return "IWEB_URL"
+        return "IWEB"
 
     def backup_column(self):
         return "VALID_IWEB"
