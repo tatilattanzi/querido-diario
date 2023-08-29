@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorMegas(Mapeador):
     name = "mapeadormegas"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 25}
-
     def column(self):
-        return "MEGAS_URL"
+        return "MEGAS"
 
     def backup_column(self):
         return "VALID_MEGAS"
