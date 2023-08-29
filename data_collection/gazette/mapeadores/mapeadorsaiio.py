@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorSaiio(Mapeador):
     name = "mapeadorsaiio"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 16}
-
     def column(self):
-        return "SAIIO_URL"
+        return "SAIIO"
 
     def backup_column(self):
         return "VALID_SAIIO"
@@ -25,5 +23,6 @@ class MapeadorSaiio(Mapeador):
 
     def validation(self, response):
         if "imap.org.br" in response.text:
-            return True
+            if "Nenhuma Edição Encontrada" not in response.text:
+                return True
         return False
