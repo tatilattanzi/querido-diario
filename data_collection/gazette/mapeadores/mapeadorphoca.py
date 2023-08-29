@@ -4,12 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorPhoca(Mapeador):
     name = "mapeadorphoca"
 
-    custom_settings = {
-        "CONCURRENT_REQUESTS": 50,
-    }
-
     def column(self):
-        return "PHOCA_URL"
+        return "PHOCA"
 
     def backup_column(self):
         return "VALID_PHOCA"
