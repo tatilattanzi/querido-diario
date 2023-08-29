@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorContecn(Mapeador):
     name = "mapeadorcontecn"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 25}
-
     def column(self):
-        return "CONTECN_URL"
+        return "CONTECN"
 
     def backup_column(self):
         return "VALID_CONTECN"
@@ -26,5 +24,6 @@ class MapeadorContecn(Mapeador):
 
     def validation(self, response):
         if "4sconexaoetecnologia.com.br" in response.text:
-            return True
+            if "Municipio ainda não possui" not in response.text:
+                return True
         return False
