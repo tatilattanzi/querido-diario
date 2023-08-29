@@ -4,12 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorJdown(Mapeador):
     name = "mapeadorjdown"
 
-    custom_settings = {
-        "CONCURRENT_REQUESTS": 50,
-    }
-
     def column(self):
-        return "JDOWN_URL"
+        return "JDOWN"
 
     def backup_column(self):
         return "VALID_JDOWN"
@@ -23,6 +19,6 @@ class MapeadorJdown(Mapeador):
         ]
 
     def validation(self, response):
-        if "jdownloads.com" in response.text:
+        if "jDownloads.com" in response.text or "jdownloads.com" in response.text:
             return True
         return False
