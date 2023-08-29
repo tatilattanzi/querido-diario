@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorDkc(Mapeador):
     name = "mapeadordkc"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 50}
-
     def column(self):
-        return "DKC_URL"
+        return "DKC"
 
     def backup_column(self):
         return "VALID_DKC"
