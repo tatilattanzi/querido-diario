@@ -4,12 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorAgape(Mapeador):
     name = "mapeadoragape"
 
-    custom_settings = {
-        "CONCURRENT_REQUESTS": 50,
-    }
-
     def column(self):
-        return "AGAPE_URL"
+        return "AGAPE"
 
     def backup_column(self):
         return "VALID_AGAPE"
@@ -25,5 +21,6 @@ class MapeadorAgape(Mapeador):
 
     def validation(self, response):
         if "agapesistemas.com.br" in response.text:
-            return True
+            if 'div class="item"' in response.text or "bandeira" in response.text:
+                return True
         return False
