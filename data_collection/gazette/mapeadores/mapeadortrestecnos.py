@@ -4,12 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorTrestecnos(Mapeador):
     name = "mapeadortrestecnos"
 
-    custom_settings = {
-        "CONCURRENT_REQUESTS": 50,
-    }
-
     def column(self):
-        return "TREST_URL"
+        return "TREST"
 
     def backup_column(self):
         return "VALID_TREST"
@@ -25,6 +21,8 @@ class MapeadorTrestecnos(Mapeador):
         ]
 
     def validation(self, response):
-        if "3tecnos.com.br" in response.text or "3Tecnos.co.br" in response.text:
-            return True
+        if "3tecnos.com.br" in response.text or "3Tecnos.com.br" in response.text:
+            if "indisponivel" not in response.url:
+                if "O serviço solicitado está indisponível" not in response.text:
+                    return True
         return False
