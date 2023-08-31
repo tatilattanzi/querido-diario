@@ -4,15 +4,11 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorGeddoem(Mapeador):
     name = "mapeadorgeddoem"
 
-    custom_settings = {
-        "CONCURRENT_REQUESTS": 50,
-    }
-
     def column(self):
-        return "GEDDOEM_URL"
+        return "GEDDOEM"
 
     def backup_column(self):
-        return "VALID_GEDDOEM"  # ruim de fazer triagem pq tem mt site de transparencia
+        return "VALID_GEDDOEM"
 
     def urls_pattern(self, protocol, city, state_code):
         # casos conhecidos
