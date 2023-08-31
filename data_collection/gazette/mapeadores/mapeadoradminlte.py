@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorAdminLTE(Mapeador):
     name = "mapeadoradminlte"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 35}
-
     def column(self):
-        return "ADMINLTE_URL"
+        return "ADMINLTE"
 
     def backup_column(self):
         return "VALID_ADMINLTE"
@@ -24,6 +22,12 @@ class MapeadorAdminLTE(Mapeador):
         return lista
 
     def validation(self, response):
-        if "PRE-LOADER" in response.text:  # TODO: pode n ser um bom criterio
-            return True
+        if "PRE-LOADER" in response.text:
+            if "col-sm-5" in response.text:
+                if "col-sm-7" in response.text:
+                    if (
+                        'data-original-title="Baixar a Última Edição Normal">Acessar</a>'
+                        in response.text
+                    ):
+                        return True
         return False
