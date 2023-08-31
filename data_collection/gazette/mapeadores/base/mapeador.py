@@ -3,23 +3,28 @@ import time
 from pathlib import Path
 
 import scrapy
-from unidecode import unidecode  # não existe nos requirements
+from unidecode import unidecode
 
 
 class Mapeador(scrapy.Spider):
-    ## TODO: acertar a documentação
+    """
+    Class base para Mapeadores
+    #TODO documentação
+    """
 
-    """
-    Class base para Mapeadores (Em Processo)
-    """
+    custom_settings = {
+        "RETRY_ENABLED": False,
+        "AUTOTHROTTLE_ENABLED": True,
+        "AUTOTHROTTLE_TARGET_CONCURRENCY": 100,
+    }
 
     name = "mapeador"
-    territories = []
     protocols = ["http", "https"]
+    territories = []
 
     def start_requests(self):
         self.read_csv("dados_mapeamento")
-        self.add_column_key()  # add new key to data dict. Valid urls found will be placed here
+        self.add_column_key()  # add column to fill with search results
 
         for i in range(len(self.territories)):
             self.log(i)
@@ -50,10 +55,10 @@ class Mapeador(scrapy.Spider):
 
         combination_list.append(self.remove_blankspaces(city_name))  # cityname
         combination_list.append(self.blankspaces_to_underline(city_name))  # city_name
-        combination_list += self.name_parts(city_name)  # city / name
-
-        # combination_list += self.name_abbreviation(city_name)  # cname
-        # combination_list += self.add_pm_to_names(combination_list) #pm + all above
+        combination_list.append(self.blankspaces_to_hifen(city_name))  # city-name
+        combination_list.append(self.name_abbreviation(city_name))  # cn
+        combination_list += self.name_parts(city_name)  # city | name
+        # combination_list += self.add_pm_to_names(combination_list) #pm + all
 
         return combination_list
 
@@ -68,35 +73,23 @@ class Mapeador(scrapy.Spider):
     def blankspaces_to_underline(self, name):
         return name.replace(" ", "_")
 
+    def blankspaces_to_hifen(self, name):
+        return name.replace(" ", "-")
+
     def name_parts(self, name):
-        parts = name.split()
-        for n in parts:
-            if n in ["da", "de", "do"]:
-                parts.remove(n)
-        return parts
+        name = name.replace(" da ", " ").replace(" de ", " ").replace(" do ", " ")
+        return name.split()
 
     def name_abbreviation(self, city_name):
-        # problema: d'agua está virando dagua no codigo, chega aqui usando d no split e nao a
         subnames = city_name.split()
-        abbrev_list = []
-
-        if len(subnames) > 1:
-            begin = ""
-            end = ""
-            for i in range(len(subnames)):
-                if subnames[i] not in ["da", "de", "do"]:
-                    begin += subnames[i][0]
-                    for y in range(i + 1, len(subnames)):
-                        if subnames[y] not in ["da", "de", "do"]:
-                            end += subnames[y]
-                    abbrev = begin + end
-                    if len(abbrev) > 3:
-                        abbrev_list.append(abbrev)
-                    end = ""
-
-        return abbrev_list
+        abbrev = ""
+        for n in subnames:
+            if n not in ["da", "de", "do"]:
+                abbrev += n[0]
+        return abbrev
 
     def add_pm_to_names(self, list_names):
+        # pm: prefeitura municipal
         aux = []
         for name in list_names:
             aux.append(f"pm{name}")
@@ -138,8 +131,6 @@ class Mapeador(scrapy.Spider):
     def log(self, i):
         if i % 100 == 0:
             print(f"[{i}/5570] {time.strftime('%H:%M:%S', time.localtime())}")
-        if i % 1000 == 0:
-            print(
-                f"[BACKUP PARCIAL] Salvando dados parciais... {i}/{len(self.territories)}"
-            )
+        if i % 500 == 0:
+            print("[BACKUP PARCIAL] Salvando dados parciais...")
             self.save_csv(f"[PARCIAL][{self.column()}] dados_mapeamento-{i}-5570")
