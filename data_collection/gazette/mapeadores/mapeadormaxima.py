@@ -4,10 +4,8 @@ from gazette.mapeadores.base.mapeador import Mapeador
 class MapeadorMaxima(Mapeador):
     name = "mapeadormaxima"
 
-    custom_settings = {"CONCURRENT_REQUESTS": 75}
-
     def column(self):
-        return "MAX_URL"
+        return "MAX"
 
     def backup_column(self):
         return "VALID_MAX"
@@ -17,16 +15,18 @@ class MapeadorMaxima(Mapeador):
         # https://assuncao.pb.gov.br/publicacoes/boletim-oficial
         # https://boqueirao.pb.gov.br/publicacoes/jornal-oficial
         # https://caturite.pb.gov.br/publicacoes/diario-oficial
+        # https://barradesantarosa.pb.gov.br/publicacoes/mensario-oficial
 
-        # TODO: notar que ao fim muda. Abstrai pra parte comum. Precisa validar se está bom, ou se tem que destrinchar os 3 casos.
-
-        lista = [f"{protocol}://{city}.{state_code}.gov.br/publicacoes/"]
+        lista = [
+            f"{protocol}://{city}.{state_code}.gov.br/publicacoes/boletim-oficial",
+            f"{protocol}://{city}.{state_code}.gov.br/publicacoes/jornal-oficial",
+            f"{protocol}://{city}.{state_code}.gov.br/publicacoes/diario-oficial",
+            f"{protocol}://{city}.{state_code}.gov.br/publicacoes/mensario-oficial",
+        ]
         return lista
 
     def validation(self, response):
-        if (
-            "col-md-4 col-sm-12 btn-group-vertical mb-4 nav-pub align-top d-table"
-            in response.text
-        ):
-            return True
+        if "maxima.inf.br" in response.text:
+            if "Nenhum resultado" not in response.text:
+                return True
         return False
