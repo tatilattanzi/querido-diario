@@ -20,5 +20,6 @@ class MapeadorInstar(Mapeador):
     def validation(self, response):
         if "Instar Tecnologia" in response.text or "instar.com.br" in response.text:
             if "Nenhum diário oficial encontrado" not in response.text:
-                return True
+                if "diario-oficial" in response.url:
+                    return True
         return False

@@ -22,6 +22,6 @@ class MapeadorDioenet(Mapeador):
             "https://plenussistemas.dioenet.com.br/public/uploads/cidades/"
             in response.text
         ):
-            if "Sem registros encontrados..." not in response.text:
+            if "Sem registros encontrados" not in response.text:
                 return True
         return False

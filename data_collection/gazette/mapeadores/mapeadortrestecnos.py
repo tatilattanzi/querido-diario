@@ -5,10 +5,10 @@ class MapeadorTrestecnos(Mapeador):
     name = "mapeadortrestecnos"
 
     def column(self):
-        return "TREST"
+        return "TRESTECNOS"
 
     def backup_column(self):
-        return "VALID_TREST"
+        return "VALID_TRESTECNOS"
 
     def urls_pattern(self, protocol, city, state_code):
         # casos conhecidos
